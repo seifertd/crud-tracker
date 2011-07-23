@@ -47,3 +47,16 @@
 }
 .crud_game table tr[data-alive="false"] td.strikes:hover {
 }
+
+/* Game List */
+ol.last {
+  display: block;
+  padding-left: 20px;
+}
+li.last {
+  display: block;
+}
+li.last:before {
+  content: "L. ";
+}
+

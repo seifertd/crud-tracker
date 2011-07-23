@@ -14,3 +14,18 @@ besty:
   name: Best
   nickname:
   points: 100
+
+george:
+  name: George
+  nickname: georgie
+  points: 12
+
+nopoints:
+  name: No Points
+  nickname:
+  points: 0
+
+loser:
+  name: Loser
+  nickname: loser
+  points: 0

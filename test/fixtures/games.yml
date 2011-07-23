@@ -5,3 +5,7 @@ one:
 
 two:
   started: false
+
+finished_game:
+  started: true
+  inning: 2

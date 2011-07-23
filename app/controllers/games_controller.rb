@@ -2,7 +2,7 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.xml
   def index
-    @games = Game.all
+    @games = Game.order('created_at desc')
 
     respond_to do |format|
       format.html # index.html.erb
@@ -68,17 +68,7 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     respond_to do |format|
       if params[:submit] == 'inning over'
-        position = @game.entrants.size
-        params[:entrant_ids].each_with_index do |entrant_id, idx|
-          entrant = Entrant.find(entrant_id);
-          entrant.position = position - idx
-          entrant.send("inning_#{@game.inning}_position=", idx + 1)
-          entrant.save!
-        end
-        @game.inning += 1
-        if @game.inning >= 3
-          @game.started = false
-        end
+        @game.inning_over(params[:entrant_ids])
       end
       if @game.save
         format.html { redirect_to(@game, :notice => 'Game was successfully updated.') }

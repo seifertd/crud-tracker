@@ -25,9 +25,9 @@ class GamesControllerTest < ActionController::TestCase
     assert_redirected_to game_path(assigns(:game))
 
     new_game = assigns(:game)
-    assert_equal 3, new_game.players.size
+    assert_equal Player.all.size, new_game.players.size
     assert_equal @players.map(&:id), new_game.entrants.map{|e| e.player.id}
-    assert_equal [1,2,3], new_game.entrants.map(&:position)
+    assert_equal [1,2,3,4,5,6], new_game.entrants.map(&:position)
   end
 
   test "should show game" do
