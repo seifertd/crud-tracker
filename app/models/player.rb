@@ -11,4 +11,28 @@ class Player < ActiveRecord::Base
       display_name
     end
   end
+
+  def games_played
+    @games_played ||= entrants.size * 2
+  end
+
+  def win_percentage
+    wins = entrants.inject(0) {|sum, entrant| sum += ((entrant.inning_1_position == 1 ? 1 : 0) + (entrant.inning_2_position == 1 ? 1 : 0))}
+    wins.to_f / games_played * 100.0
+  end
+
+  def place_percentage
+    wins = entrants.inject(0) {|sum, entrant| sum += ((entrant.inning_1_position == 2 ? 1 : 0) + (entrant.inning_2_position == 2 ? 1 : 0))}
+    wins.to_f / games_played * 100.0
+  end
+
+  def show_percentage
+    wins = entrants.inject(0) {|sum, entrant| sum += ((entrant.inning_1_position == 3 ? 1 : 0) + (entrant.inning_2_position == 3 ? 1 : 0))}
+    wins.to_f / games_played * 100.0
+  end
+
+  def last_percentage
+    wins = entrants.inject(0) {|sum, entrant| num_entrants = entrant.game.entrants.size; sum += ((entrant.inning_1_position == num_entrants ? 1 : 0) + (entrant.inning_2_position == num_entrants ? 1 : 0))}
+    wins.to_f / games_played * 100.0
+  end
 end

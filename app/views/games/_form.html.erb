@@ -14,7 +14,7 @@
   <h2>Available Players</h2>
   <ul class="players" id="available_players">
     <% @game.available_players.each do |player| -%>
-      <li data-id="<%=player.id%>"><%=player.display_name%></li>
+      <li data-id="<%=player.id%>"><%= check_box_tag 'player_ids[]', player.id %> <%=player.display_name%></li>
     <% end -%>
   </ul>
 

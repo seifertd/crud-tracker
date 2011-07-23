@@ -42,10 +42,10 @@ class GamesController < ApplicationController
   def create
     @game = Game.new(:started => true)
 
-    entrant_ids = params[:entrant_ids]
+    entrant_ids = ((params[:entrant_ids] || []) + (params[:player_ids] || [])).uniq
     entrant_ids.shuffle! if params[:shuffle]
     position = 1
-    @game.entrants = params[:entrant_ids].map do |player_id|
+    @game.entrants = entrant_ids.map do |player_id|
       entrant = Entrant.new(:player_id => player_id, :position => position)
       position += 1
       entrant

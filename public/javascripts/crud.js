@@ -50,7 +50,7 @@ var crudGame = function () {
       // If the game is over, redirect to home
       if (!response_data.game.started) {
         confirm("The game is over!");
-        window.location = "/";
+        window.location = "/players";
         return;
       }
       // Bump the inning
