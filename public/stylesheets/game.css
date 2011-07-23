@@ -1,0 +1,49 @@
+.player_list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid blue;
+}
+.player_list ul li {
+  padding-left: 5px;
+  padding-right: 5px;
+  border-width: 1px 1px 0 1px;
+  border-style: solid;
+  border-color: blue;
+}
+.player_list ul li:nth-child(odd) {
+  background-color: #eee; 
+}
+.player_list ul li:nth-child(even) {
+  background-color: #ddd; 
+}
+.player_list ul li:hover {
+  background-color: yellow;
+}
+.player_list .actions {
+  margin-top: 20px;
+}
+
+/* Crud Game */
+.crud_game table tr {
+  height: 35px;
+}
+.crud_game table tr td.strikes {
+  padding-left: 10px;
+}
+.crud_game table tr:nth-child(odd) td {
+  background-color: #eee; 
+}
+.crud_game table tr:nth-child(even) td {
+  background-color: #ddd; 
+}
+.crud_game table tr td.strikes:hover  {
+  background-color: yellow;
+  cursor: pointer;
+}
+.crud_game table tr[data-alive="false"] td {
+  background-color: pink !important;
+  text-decoration: line-through !important;
+}
+.crud_game table tr[data-alive="false"] td.strikes:hover {
+}

@@ -1,0 +1,16 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: Foo
+  nickname: jooby
+  points: 0
+
+two:
+  name: Bar
+  nickname: barby
+  points: 10
+
+besty:
+  name: Best
+  nickname:
+  points: 100

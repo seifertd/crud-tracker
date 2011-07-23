@@ -1,0 +1,41 @@
+<%= form_for(@game) do |f| %>
+  <% if @game.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@game.errors.count, "error") %> prohibited this game from being saved:</h2>
+
+      <ul>
+      <% @game.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="player_list">
+  <h2>Available Players</h2>
+  <ul class="players" id="available_players">
+    <% @game.available_players.each do |player| -%>
+      <li data-id="<%=player.id%>"><%=player.display_name%></li>
+    <% end -%>
+  </ul>
+
+  <h2>Players in the Game</h2>
+  <ul class="players" id="playing_players">
+    <% game_players = @game.players -%>
+    <% if game_players.blank? -%>
+      <li class="empty">Drag players here...</li>
+    <% else -%>
+      <% @game.players.each do |player| -%>
+        <li data-id="<%=player.id%>"><%=player.display_name%></li>
+      <% end -%>
+    <% end -%>
+  </ul>
+
+  <p>
+  <%= check_box_tag 'shuffle' %> Shuffle Player List?
+  </p>
+
+  <div class="actions">
+    <%= f.submit 'Start Game' %>
+  </div>
+  </div>
+<% end %>
