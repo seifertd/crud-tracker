@@ -13,7 +13,9 @@ class Player < ActiveRecord::Base
   end
 
   def games_played
-    @games_played ||= entrants.size * 2
+    @games_played ||= entrants.inject(0) do |sum, entrant|
+      sum += (entrant.inning_1_position ? 1 : 0) + (entrant.inning_2_position ? 1 : 0)
+    end
   end
 
   def win_percentage
