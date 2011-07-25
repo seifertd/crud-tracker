@@ -22,7 +22,7 @@
   <ul class="players" id="playing_players">
     <% game_players = @game.players -%>
     <% if game_players.blank? -%>
-      <li class="empty">Drag players here...</li>
+      <li class="empty">Select some players above...</li>
     <% else -%>
       <% @game.players.each do |player| -%>
         <li data-id="<%=player.id%>"><%=player.display_name%></li>

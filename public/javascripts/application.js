@@ -1,21 +1,39 @@
-// game drag n drop
+// game selection
 $(document).ready(function() {
-  $("#available_players, #playing_players").sortable({
-    connectWith: ".players",
-    receive: function(event, ui) {
-      if (ui.sender.attr('id') == 'playing_players') {
-        // Make sure the check box is unchecked
-        $(ui.item).find("input").prop('checked', false);
-        if ( $("#playing_players li").size() == 1 ) {
-          $("li.empty").show();
-        }
-      } else {
-        // Make sure the check box is checked
-        $(ui.item).find("input").prop('checked', true);
-        $("li.empty").hide();
+  var playing_list = $('#playing_players');
+  var available_list = $('#available_players');
+  function handle_click(original_li) {
+    var li_clicked = $(original_li);
+    var parent_ul = li_clicked.parent(); 
+    var add_to = null;
+
+    // Remove from original list
+    li_clicked.remove();
+
+    if (parent_ul.attr('id') == 'playing_players') {
+      // Make sure the check box is unchecked
+      li_clicked.find("input").prop('checked', false);
+      if ( $("#playing_players li").size() == 1 ) {
+        $("li.empty").show();
       }
+      add_to = available_list;
+    } else {
+      // Make sure the check box is checked
+      li_clicked.find("input").prop('checked', true);
+      $("li.empty").hide();
+      add_to = playing_list;
     }
-  }).disableSelection();
+
+    // Put in new list
+    add_to.append(original_li);
+    // reattache the click handler
+    $(original_li).click(function() {
+      handle_click(this);
+    })
+  }
+  $(".players li").click(function() {
+      handle_click(this);
+  });
 
   $("#new_game").submit(function() {
     try {
