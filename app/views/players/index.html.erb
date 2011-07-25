@@ -1,6 +1,6 @@
 <h1>Crud Leader Board</h1>
 
-<table>
+<table id="leader_board">
   <tr>
     <th rowspan=2>Name</th>
     <th rowspan=2>Nickname</th>
@@ -17,12 +17,12 @@
   <tr>
     <td><%= player.name %></td>
     <td><%= player.nickname %></td>
-    <td><%= player.games_played %></td>
-    <td><%= player.points || 0 %></td>
-    <td><%= "%4.1f%" % player.win_percentage if player.games_played > 0%></td>
-    <td><%= "%4.1f%" % player.place_percentage if player.games_played > 0%></td>
-    <td><%= "%4.1f%" % player.show_percentage if player.games_played > 0%></td>
-    <td><%= "%4.1f%" % player.last_percentage if player.games_played > 0%></td>
+    <td class="numeric"><%= player.games_played %></td>
+    <td class="numeric"><%= player.points || 0 %></td>
+    <td class="numeric"><%= "%4.1f%" % player.win_percentage if player.games_played > 0%></td>
+    <td class="numeric"><%= "%4.1f%" % player.place_percentage if player.games_played > 0%></td>
+    <td class="numeric"><%= "%4.1f%" % player.show_percentage if player.games_played > 0%></td>
+    <td class="numeric"><%= "%4.1f%" % player.last_percentage if player.games_played > 0%></td>
     <td><%= link_to 'Show', player %></td>
     <td><%= link_to 'Edit', edit_player_path(player) %></td>
     <td><%= link_to 'Destroy', player, :confirm => 'Are you sure?', :method => :delete %></td>

@@ -25,6 +25,9 @@
 }
 
 /* Crud Game */
+.crud_game {
+  width: 300px;
+}
 .crud_game table tr {
   height: 35px;
 }
@@ -46,6 +49,11 @@
   text-decoration: line-through !important;
 }
 .crud_game table tr[data-alive="false"] td.strikes:hover {
+}
+
+/* Leader Board */
+#leader_board td.numeric {
+  text-align: center;
 }
 
 /* Game List */
