@@ -26,8 +26,10 @@ class Game < ActiveRecord::Base
 
   def finish
     logger.debug("Game #{self.id} has finished")
+    return unless self.started
     self.started = false
     [1,2].each do |finished_inning|
+      next if entrants.any?{|e| e.send("inning_#{finished_inning}_position").nil?}
       logger.debug(" -> Inning #{finished_inning}")
       standings = entrants.sort_by(&"inning_#{finished_inning}_position".to_sym)
       logger.debug("  -> Last place: #{standings.last.id}, player: #{standings.last.player.name}, points before: #{standings.last.player.points}")

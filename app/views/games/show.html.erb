@@ -10,6 +10,10 @@ Started: <%= @game.created_at.to_formatted_s(:long) %>
 
 <h2>Inning: <span id="inning"><%= @game.inning %></span></h2>
 
+<p>
+<%= button_to 'End Game Now', @game, :confirm => 'Are you sure?', :method => 'put', :name => 'submit' %>
+</p>
+
 <div class="crud_game" data-game="<%=@game.id%>">
   <table width="100%">
     <tr><th>Players</th><th>Strikes</th></tr>

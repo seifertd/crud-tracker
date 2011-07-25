@@ -67,11 +67,17 @@ class GamesController < ApplicationController
   def update
     @game = Game.find(params[:id])
     respond_to do |format|
+      redirect_to_obj = @game
+      notice_text = 'Game was successfully updated.'
       if params[:submit] == 'inning over'
         @game.inning_over(params[:entrant_ids])
+      elsif params[:submit] == 'End Game Now'
+        @game.finish
+        notice_text = 'Game was ended'
+        redirect_to_obj = games_url
       end
       if @game.save
-        format.html { redirect_to(@game, :notice => 'Game was successfully updated.') }
+        format.html { redirect_to(redirect_to_obj, :notice => notice_text) }
         format.xml  { head :ok }
         format.json { render :json => @game.to_json(:include => :entrants), :layout => false }
       else
