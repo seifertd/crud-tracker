@@ -6,6 +6,22 @@ class PlayersController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
+      format.json do
+        json = @players.map do |player|
+          {
+            :player_id => player.id,
+            :name => player.name,
+            :nickname => player.nickname,
+            :points => player.points,
+            :games_played => player.games_played,
+            :win_percentage => player.win_percentage,
+            :place_percentage => player.place_percentage,
+            :show_percentage => player.show_percentage,
+            :last_percentage => player.last_percentage
+          }
+        end
+        render :json => json
+      end
       format.xml  { render :xml => @players }
     end
   end

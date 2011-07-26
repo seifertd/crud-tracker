@@ -10,6 +10,7 @@
   border-width: 1px 1px 0 1px;
   border-style: solid;
   border-color: blue;
+  line-height: 35px;
 }
 .player_list ul li:nth-child(odd) {
   background-color: #eee; 
