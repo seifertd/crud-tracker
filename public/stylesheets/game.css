@@ -30,7 +30,8 @@
   width: 300px;
 }
 .crud_game table tr {
-  height: 35px;
+  height: 45px;
+  line-height: 45px;
 }
 .crud_game table tr td.strikes {
   padding-left: 10px;
