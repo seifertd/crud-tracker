@@ -25,8 +25,6 @@
     <td class="numeric"><%= "%4.1f%" % player.last_percentage if player.games_played > 0%></td>
     <td><%= link_to 'Show', player %></td>
     <td><%= link_to 'Edit', edit_player_path(player) %></td>
-    <td><%= link_to 'Destroy', player, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
 <% end %>
 </table>
 

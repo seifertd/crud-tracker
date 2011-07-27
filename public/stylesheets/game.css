@@ -54,6 +54,18 @@
 }
 
 /* Leader Board */
+#leader_board {
+  border-collapse: collapse;
+}
+#leader_board .header {
+  background-color: lightgreen !important;
+}
+#leader_board tr:nth-child(odd) {
+  background-color: #eee;
+}
+#leader_board tr:nth-child(even) {
+  background-color: #ddd;
+}
 #leader_board td.numeric {
   text-align: center;
 }
