@@ -2,7 +2,16 @@ class PlayersController < ApplicationController
   # GET /players
   # GET /players.xml
   def index
-    @players = Player.order('points desc, name asc')
+    @players = Player.all
+
+    logger.info("SORTING #{@players.inspect}")
+    @players = @players.sort_by do |player|
+      sort_array = [0.0 - (player.points || 1000), 0.0 - (player.win_percentage || 1000), 0.0 - (player.place_percentage || 1000), 0.0 - (player.show_percentage || 1000), player.last_percentage || 1000, player.name ]
+      logger.info("Player: #{player.name}: #{sort_array.inspect}")
+      sort_array
+    end
+    logger.info("DONE SORTING #{@players.inspect}")
+
 
     respond_to do |format|
       format.html # index.html.erb

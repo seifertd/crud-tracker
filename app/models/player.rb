@@ -19,22 +19,38 @@ class Player < ActiveRecord::Base
   end
 
   def win_percentage
-    wins = entrants.inject(0) {|sum, entrant| sum += ((entrant.inning_1_position == 1 ? 1 : 0) + (entrant.inning_2_position == 1 ? 1 : 0))}
-    wins.to_f / games_played * 100.0
+    if games_played > 0
+      wins = entrants.inject(0) {|sum, entrant| sum += ((entrant.inning_1_position == 1 ? 1 : 0) + (entrant.inning_2_position == 1 ? 1 : 0))}
+      wins.to_f / games_played * 100.0
+    else
+      nil
+    end
   end
 
   def place_percentage
-    wins = entrants.inject(0) {|sum, entrant| sum += ((entrant.inning_1_position == 2 ? 1 : 0) + (entrant.inning_2_position == 2 ? 1 : 0))}
-    wins.to_f / games_played * 100.0
+    if games_played > 0
+      wins = entrants.inject(0) {|sum, entrant| sum += ((entrant.inning_1_position == 2 ? 1 : 0) + (entrant.inning_2_position == 2 ? 1 : 0))}
+      wins.to_f / games_played * 100.0
+    else
+      nil
+    end
   end
 
   def show_percentage
-    wins = entrants.inject(0) {|sum, entrant| sum += ((entrant.inning_1_position == 3 ? 1 : 0) + (entrant.inning_2_position == 3 ? 1 : 0))}
-    wins.to_f / games_played * 100.0
+    if games_played > 0
+      wins = entrants.inject(0) {|sum, entrant| sum += ((entrant.inning_1_position == 3 ? 1 : 0) + (entrant.inning_2_position == 3 ? 1 : 0))}
+      wins.to_f / games_played * 100.0
+    else
+      nil
+    end
   end
 
   def last_percentage
-    wins = entrants.inject(0) {|sum, entrant| num_entrants = entrant.game.entrants.size; sum += ((entrant.inning_1_position == num_entrants ? 1 : 0) + (entrant.inning_2_position == num_entrants ? 1 : 0))}
-    wins.to_f / games_played * 100.0
+    if games_played > 0
+      wins = entrants.inject(0) {|sum, entrant| num_entrants = entrant.game.entrants.size; sum += ((entrant.inning_1_position == num_entrants ? 1 : 0) + (entrant.inning_2_position == num_entrants ? 1 : 0))}
+      wins.to_f / games_played * 100.0
+    else
+      nil
+    end
   end
 end
