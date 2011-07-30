@@ -48,6 +48,13 @@
 <% end %>
 </table>
 
+<p>
+<%= will_paginate @games %>
+</p>
+<p>
+<%= page_entries_info(@games).html_safe %>
+</p>
+
 <br />
 
 <%= link_to 'New Game', new_game_path %>

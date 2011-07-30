@@ -10,14 +10,16 @@
       </ul>
     </div>
   <% end %>
-  <div class="player_list">
+  <div class="player_list" style="float:left;">
   <h2>Available Players</h2>
   <ul class="players" id="available_players">
     <% @game.available_players.each do |player| -%>
       <li data-id="<%=player.id%>"><%= check_box_tag 'player_ids[]', player.id %> <%=player.display_name%></li>
     <% end -%>
   </ul>
+  </div>
 
+  <div class="player_list" style="float:left; margin-left: 30px;">
   <h2>Players in the Game</h2>
   <ul class="players" id="playing_players">
     <% game_players = @game.players -%>
@@ -29,7 +31,9 @@
       <% end -%>
     <% end -%>
   </ul>
+</div>
 
+<div style="clear: both">
   <p>
   <%= check_box_tag 'shuffle' %> Shuffle Player List?
   </p>
@@ -37,5 +41,5 @@
   <div class="actions">
     <%= f.submit 'Start Game' %>
   </div>
-  </div>
+</div>
 <% end %>
