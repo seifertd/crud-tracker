@@ -24,7 +24,7 @@
   <ul class="players" id="playing_players">
     <% game_players = @game.players -%>
     <% if game_players.blank? -%>
-      <li class="empty">Select some players above...</li>
+      <li class="empty">Select some players to the left...</li>
     <% else -%>
       <% @game.players.each do |player| -%>
         <li data-id="<%=player.id%>"><%=player.display_name%></li>
@@ -34,6 +34,10 @@
 </div>
 
 <div style="clear: both">
+  <p>
+  Date Played:<br/>
+  <input type="date" name="game[created_at]" value="<%= Time.now.strftime('%Y-%m-%d')%>" placeholder="not required"/>
+  </p>
   <p>
   <%= check_box_tag 'shuffle' %> Shuffle Player List?
   </p>
