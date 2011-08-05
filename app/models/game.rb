@@ -6,32 +6,20 @@ class Game < ActiveRecord::Base
     (Player.all - players).sort_by(&:display_name)
   end
 
-  def inning_over(standings)
-    logger.debug("Game #{self.id}: end of inning #{self.inning}")
+  def game_over(standings)
+    return unless self.started
+    logger.debug("Game #{self.id}: end of game")
     self.transaction do
       position = entrants.size
       standings.each_with_index do |entrant_id, idx|
         entrant = Entrant.find(entrant_id);
         entrant.position = position - idx
-        entrant.send("inning_#{self.inning}_position=", idx + 1)
-        logger.debug("  -> Entrant #{entrant.id}, player: #{entrant.player.name}, position: #{entrant.position}")
+        entrant.final_position = idx + 1
+        logger.debug("  -> Entrant #{entrant.id}, player: #{entrant.player.name}, position: #{entrant.position}, final_position: #{entrant.final_position}")
         entrant.save!
       end
-      self.inning += 1
-      if self.inning >= 3
-        finish
-      end
-    end
-  end
-
-  def finish
-    logger.debug("Game #{self.id} has finished")
-    return unless self.started
-    self.started = false
-    [1,2].each do |finished_inning|
-      next if entrants.any?{|e| e.send("inning_#{finished_inning}_position").nil?}
-      logger.debug(" -> Inning #{finished_inning}")
-      standings = entrants.sort_by(&"inning_#{finished_inning}_position".to_sym)
+      self.started = false
+      standings = entrants.sort_by(&:final_position)
       logger.debug("  -> Last place: #{standings.last.id}, player: #{standings.last.player.name}, points before: #{standings.last.player.points}")
       standings.last.player.points ||= 0
       standings.last.player.points -= 1
@@ -44,6 +32,7 @@ class Game < ActiveRecord::Base
         entrant.player.save!
         logger.debug("  -> #{(index+1).ordinal} place: #{entrant.id}, player: #{entrant.player.name}, points after: #{entrant.player.points}")
       end
+      self.save!
     end
   end
 end

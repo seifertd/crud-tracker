@@ -6,8 +6,7 @@ class PlayersController < ApplicationController
 
     logger.info("SORTING #{@players.inspect}")
     @players = @players.sort_by do |player|
-      sort_array = [0.0 - (player.points || 1000), 0.0 - (player.win_percentage || 1000), 0.0 - (player.place_percentage || 1000), 0.0 - (player.show_percentage || 1000), player.last_percentage || 1000, player.name ]
-      logger.info("Player: #{player.name}: #{sort_array.inspect}")
+      sort_array = [0.0 - (player.ppg || -1000), player.name ]
       sort_array
     end
     logger.info("DONE SORTING #{@players.inspect}")

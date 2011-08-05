@@ -3,8 +3,7 @@
 <table>
   <tr>
     <th width="15%">Date</th>
-    <th>Inning 1</th>
-    <th>Inning 2</th>
+    <th>Results</th>
     <th>Actions</th>
   </tr>
 
@@ -12,33 +11,21 @@
   <tr>
     <td> <%=game.created_at.strftime("%Y/%m/%d %H:%M")%></td>
     <td>
-      <% if game.inning >= 1 and game.entrants.any?{|e| e.inning_1_position} -%>
+      <% if game.entrants.any?{|e| e.final_position} -%>
         <ol>
-          <% (inning_1_results = game.entrants.sort_by{|e| e.inning_1_position })[0,3].each do |entrant| -%>
+          <% (final_results = game.entrants.sort_by{|e| e.final_position })[0,3].each do |entrant| -%>
             <li><%=entrant.player.display_name %></li>
           <% end -%>
         </ol>
         <ol class="last">
-          <li class="last"><%=inning_1_results.last.player.display_name%></li>
+          <li class="last"><%=final_results.last.player.display_name%></li>
         </ol>
       <% end %>
     </td>
     <td>
-      <% if game.inning >= 2 and game.entrants.any?{|e| e.inning_2_position} -%>
-        <ol>
-          <% (inning_2_results = game.entrants.sort_by{|e| e.inning_2_position })[0,3].each do |entrant| -%>
-            <li><%=entrant.player.display_name %></li>
-          <% end -%>
-        </ol>
-        <ol class="last">
-          <li class="last"><%=inning_2_results.last.player.display_name%></li>
-        </ol>
-      <% end %>
-    </td>
-    <td>
-      <% if game.started && game.inning <= 2 %><%= link_to 'Play', game %><% end %>
-      <br/>
-      <% if game.started && game.inning == 1 && !game.entrants.any?{|e| e.inning_1_position} -%>
+      <% if game.started %>
+        <%= link_to 'Play', game %>
+        <br/>
         <%= link_to 'Players', edit_game_path(game) %>
         <br/>
       <% end -%>

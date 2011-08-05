@@ -69,8 +69,8 @@ class GamesController < ApplicationController
     respond_to do |format|
       redirect_to_obj = @game
       notice_text = 'Game was successfully updated.'
-      if params[:submit] == 'inning over'
-        @game.inning_over(params[:entrant_ids])
+      if params[:submit] == 'game over'
+        @game.game_over(params[:entrant_ids])
       elsif params[:submit] == 'End Game Now'
         @game.finish
         notice_text = 'Game was ended'

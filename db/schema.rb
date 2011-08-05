@@ -10,23 +10,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110723074446) do
+ActiveRecord::Schema.define(:version => 20110804174109) do
 
   create_table "entrants", :force => true do |t|
-    t.integer  "game_id",                             :null => false
-    t.integer  "player_id",                           :null => false
-    t.integer  "strikes",           :default => 0,    :null => false
-    t.integer  "position",          :default => 1,    :null => false
-    t.boolean  "alive",             :default => true, :null => false
-    t.integer  "inning_1_position"
+    t.integer  "game_id",                          :null => false
+    t.integer  "player_id",                        :null => false
+    t.integer  "strikes",        :default => 0,    :null => false
+    t.integer  "position",       :default => 1,    :null => false
+    t.boolean  "alive",          :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "inning_2_position"
+    t.integer  "final_position"
   end
 
   create_table "games", :force => true do |t|
     t.boolean  "started",    :default => false, :null => false
-    t.integer  "inning",     :default => 1,     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

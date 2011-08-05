@@ -6,11 +6,11 @@
     <th rowspan=2>Nickname</th>
     <th rowspan=2>Games</th>
     <th rowspan=2>Points</th>
-    <th colspan=4>Stats</th>
+    <th colspan=5>Stats</th>
     <th colspan=3 rowspan=2>Action</th>
   </tr>
   <tr class="header">
-    <th>Win</th><th>Place</th><th>Show</th><th>Last</th>
+    <th>PPG</th><th>Win</th><th>Place</th><th>Show</th><th>Last</th>
   </tr>
 
 <% @players.each do |player| %>
@@ -19,6 +19,7 @@
     <td><%= player.nickname %></td>
     <td class="numeric"><%= player.games_played %></td>
     <td class="numeric"><%= player.points || 0 %></td>
+    <td class="numeric"><%= "%5.3f" % player.ppg if player.games_played >= 5%></td>
     <td class="numeric"><%= "%4.1f%" % player.win_percentage if player.games_played > 0%></td>
     <td class="numeric"><%= "%4.1f%" % player.place_percentage if player.games_played > 0%></td>
     <td class="numeric"><%= "%4.1f%" % player.show_percentage if player.games_played > 0%></td>

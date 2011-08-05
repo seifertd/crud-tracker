@@ -14,7 +14,6 @@ fg_1:
   game: finished_game
   player: one
   strikes: 2
-  inning_1_position: 3
   alive: true
   position: 1
 
@@ -22,7 +21,6 @@ fg_2:
   game: finished_game
   player: two
   strikes: 3
-  inning_1_position: 2
   alive: false
   position: 2
 
@@ -30,7 +28,6 @@ fg_3:
   game: finished_game
   player: george
   strikes: 3
-  inning_1_position: 1
   alive: false
   position: 3
 
@@ -38,7 +35,6 @@ fg_4:
   game: finished_game
   player: nopoints
   strikes: 3
-  inning_1_position: 4
   alive: false
   position: 4
 
@@ -46,6 +42,5 @@ fg_5:
   game: finished_game
   player: loser
   strikes: 3
-  inning_1_position: 5
   alive: false
   position: 5

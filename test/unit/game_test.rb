@@ -13,30 +13,29 @@ class GameTest < ActiveSupport::TestCase
     finish_order = finish_order_entrants.map(&:id)
     before_points = finish_order_entrants.map{|e| e.player.points}
 
-    @game.inning_over(finish_order)
-    @game.save!
+    @game.game_over(finish_order)
+
     # Reload from db
     @game = Game.find(@game.id)
 
+    # Make sure it is over
     assert !@game.started, "Game should be over"
-    assert_equal 3, @game.inning, "Game inning should have incremented"
 
     # Reload entrants from db
     after_entrants = finish_order_entrants.map{|e| Entrant.find(e.id)}
     after_points = after_entrants.map{|e| e.player.points}
 
     after_entrants.each_with_index do |entrant, idx|
-      assert_equal idx+1, entrant.inning_2_position
+      assert_equal idx+1, entrant.final_position
     end
 
-    # First three entrants should have scored 4 points each
-    [0,1,2].each do |index|
-      assert_equal 4, after_points[index] - before_points[index]
-    end
+    assert_equal 3, after_points[0] - before_points[0]
+    assert_equal 2, after_points[1] - before_points[1]
+    assert_equal 1, after_points[2] - before_points[2]
     # fourth entrant should have scored nothing
     assert_equal 0, after_points[3] - before_points[3]
     # last entrant should have scored -2
-    assert_equal -2, after_points[4] - before_points[4]
+    assert_equal -1, after_points[4] - before_points[4]
   end
 
 end

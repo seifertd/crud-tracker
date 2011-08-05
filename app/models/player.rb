@@ -13,14 +13,20 @@ class Player < ActiveRecord::Base
   end
 
   def games_played
-    @games_played ||= entrants.inject(0) do |sum, entrant|
-      sum += (entrant.inning_1_position ? 1 : 0) + (entrant.inning_2_position ? 1 : 0)
+    @games_played ||= entrants.size
+  end
+
+  def ppg
+    if games_played >= 5
+      points.to_f / games_played
+    else
+      nil
     end
   end
 
   def win_percentage
     if games_played > 0
-      wins = entrants.inject(0) {|sum, entrant| sum += ((entrant.inning_1_position == 1 ? 1 : 0) + (entrant.inning_2_position == 1 ? 1 : 0))}
+      wins = entrants.inject(0) {|sum, entrant| sum += (entrant.final_position == 1 ? 1 : 0) }
       wins.to_f / games_played * 100.0
     else
       nil
@@ -29,7 +35,7 @@ class Player < ActiveRecord::Base
 
   def place_percentage
     if games_played > 0
-      wins = entrants.inject(0) {|sum, entrant| sum += ((entrant.inning_1_position == 2 ? 1 : 0) + (entrant.inning_2_position == 2 ? 1 : 0))}
+      wins = entrants.inject(0) {|sum, entrant| sum += (entrant.final_position == 2 ? 1 : 0) }
       wins.to_f / games_played * 100.0
     else
       nil
@@ -38,7 +44,7 @@ class Player < ActiveRecord::Base
 
   def show_percentage
     if games_played > 0
-      wins = entrants.inject(0) {|sum, entrant| sum += ((entrant.inning_1_position == 3 ? 1 : 0) + (entrant.inning_2_position == 3 ? 1 : 0))}
+      wins = entrants.inject(0) {|sum, entrant| sum += (entrant.final_position == 3 ? 1 : 0) }
       wins.to_f / games_played * 100.0
     else
       nil
@@ -47,7 +53,7 @@ class Player < ActiveRecord::Base
 
   def last_percentage
     if games_played > 0
-      wins = entrants.inject(0) {|sum, entrant| num_entrants = entrant.game.entrants.size; sum += ((entrant.inning_1_position == num_entrants ? 1 : 0) + (entrant.inning_2_position == num_entrants ? 1 : 0))}
+      wins = entrants.inject(0) {|sum, entrant| num_entrants = entrant.game.entrants.size; sum += (entrant.final_position == num_entrants ? 1 : 0) }
       wins.to_f / games_played * 100.0
     else
       nil

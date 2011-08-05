@@ -1,7 +1,5 @@
 var crudGame = function () {
   var game_id = 1;
-  var inning = 1;
-  var total_innings = 2;
   var table = null;
   var players = [];
 
@@ -31,7 +29,7 @@ var crudGame = function () {
     table.append(dom_row);
   }
 
-  function end_inning() {
+  function end_game() {
     var winner = $(table).find("tr[data-player]:first");
     var winner_dom = winner.get(0);
     winner.remove();
@@ -39,7 +37,7 @@ var crudGame = function () {
     var game_data = {
       id: game_id,
       entrant_ids: [],
-      submit: 'inning over',
+      submit: 'game over',
       _method: 'put',
       authenticity_token: AUTH_TOKEN
     };
@@ -47,15 +45,15 @@ var crudGame = function () {
       game_data.entrant_ids.push($(this).attr("data-player"));
     });
     $.post('/games/' + game_id + '.json', game_data, function(response_data, textStatus, jqXHR) {
+
+      // TODO: Ask to start another game with same players.
+      
       // If the game is over, redirect to home
       if (!response_data.game.started) {
         confirm("The game is over!");
         window.location = "/players";
         return;
       }
-      // Bump the inning
-      inning++;
-      $("#inning").html("" + inning);
       // Make everything live
       $(table).find("tr[data-player]").attr("data-alive", 'true');
       // Clear the strikes
@@ -84,9 +82,9 @@ var crudGame = function () {
           $(this).unbind('click');
           move_row_to_bottom(row);
         }
-        // Check if there is only one alive entry and end the inning
+        // Check if there is only one alive entry and end the game
         if (num_alive_players() <= 1) {
-          end_inning();
+          end_game();
         }
       } else {
         alert("COULD NOT FIND ENTRANT WITH ID " + entrant_id);
