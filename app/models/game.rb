@@ -35,4 +35,19 @@ class Game < ActiveRecord::Base
       self.save!
     end
   end
+
+  def self.reset_scores
+    points = Hash.new {|h,k| h[k] = 0 }
+    self.all.each do |game|
+       entrants = game.entrants.sort_by {|e| e.final_position }
+       points[entrants.first.player.id] += 3
+       points[entrants[1].player.id] += 2
+       points[entrants[2].player.id] += 1
+       points[entrants.last.player.id] -= 1
+    end
+    Player.all.each do |player|
+      player.points = points[player.id]
+      player.save!
+    end
+  end
 end
