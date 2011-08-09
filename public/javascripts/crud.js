@@ -37,12 +37,14 @@ var crudGame = function () {
     var game_data = {
       id: game_id,
       entrant_ids: [],
+      player_ids: [],
       submit: 'game over',
       _method: 'put',
       authenticity_token: AUTH_TOKEN
     };
     $($(table).find("tr[data-player]").get().reverse()).each(function(idx) {
       game_data.entrant_ids.push($(this).attr("data-player"));
+      game_data.player_ids.push($(this).attr("data-pid"));
     });
     $.post('/games/' + game_id + '.json', game_data, function(response_data, textStatus, jqXHR) {
 
@@ -50,8 +52,17 @@ var crudGame = function () {
       
       // If the game is over, redirect to home
       if (!response_data.game.started) {
-        confirm("The game is over!");
-        window.location = "/players";
+        if ( confirm("The game is over!\nDo you want to continue this game\n(play another game with the\norder set by the previous game)?") ) {
+          var form = $("<form>").attr("method", "post").attr("action", "/games");
+          $("<input type='hidden'>").attr("name", "authenticity_token").attr("value", AUTH_TOKEN).appendTo(form);
+          $(game_data.player_ids.reverse()).each(function(idx, player_id) {
+            $("<input type='hidden'>").attr("name", "player_ids[]").attr("value", player_id).appendTo(form);
+          });
+          form.appendTo("body");
+          form.submit();
+        } else {
+          window.location = "/players";
+        }
         return;
       }
       // Make everything live

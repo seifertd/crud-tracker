@@ -16,7 +16,7 @@ Started: <%= @game.created_at.to_formatted_s(:long) %>
   <table width="100%">
     <tr><th>Players</th><th>Strikes</th><th>Fix?</th></tr>
     <% @game.entrants.each do |entrant| -%>
-      <tr data-player="<%=entrant.id%>" data-strikes="<%=entrant.strikes%>" data-alive="<%=entrant.alive%>"><td width="70%"><%=entrant.player.display_name%></td><td width="30%" class="strikes"><% entrant.strikes.times do %><%=image_tag 'strike.gif'%><% end %></td></tr>
+      <tr data-player="<%=entrant.id%>" data-pid="<%=entrant.player_id%>" data-strikes="<%=entrant.strikes%>" data-alive="<%=entrant.alive%>"><td width="70%"><%=entrant.player.display_name%></td><td width="30%" class="strikes"><% entrant.strikes.times do %><%=image_tag 'strike.gif'%><% end %></td></tr>
     <% end -%>
   </table>
 </div>

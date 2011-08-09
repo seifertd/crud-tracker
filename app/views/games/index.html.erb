@@ -9,7 +9,7 @@
 
 <% @games.each do |game| %>
   <tr>
-    <td> <%=game.created_at.strftime("%Y/%m/%d %H:%M")%></td>
+    <td> <%=game.created_at.strftime("%Y/%m/%d")%></td>
     <td>
       <% if game.entrants.any?{|e| e.final_position} -%>
         <ol>
