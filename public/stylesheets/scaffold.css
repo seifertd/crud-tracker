@@ -54,3 +54,17 @@ div.field, div.actions {
   font-size: 12px;
   list-style: square;
 }
+
+#header div {
+  float: left;
+}
+
+#header ul li {
+  display: inline;
+  list-style-type: none;
+  padding-right: 20px;
+}
+
+#main {
+  clear: both;
+}
