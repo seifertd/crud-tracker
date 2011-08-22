@@ -36,7 +36,7 @@
 <div style="clear: both">
   <p>
   Date Played:<br/>
-  <input type="date" name="game[created_at]" value="<%= Time.now.strftime('%Y-%m-%d')%>" placeholder="not required"/>
+  <input type="datetime-local" name="game[created_at]" size="20" value="<%= Time.now.strftime('%Y-%m-%dT%H:%M')%>" placeholder="not required"/>
   </p>
   <p>
   <%= check_box_tag 'shuffle' %> Shuffle Player List?
