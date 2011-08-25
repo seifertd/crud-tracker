@@ -18,6 +18,7 @@ class PlayersController < ApplicationController
             :nickname => player.nickname,
             :points => player.points,
             :games_played => player.games_played,
+            :ppg => player.ppg,
             :win_percentage => player.win_percentage,
             :place_percentage => player.place_percentage,
             :show_percentage => player.show_percentage,

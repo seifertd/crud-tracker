@@ -17,7 +17,7 @@ class Player < ActiveRecord::Base
   end
 
   def ppg
-    if games_played >= 5
+    @ppg ||= if games_played >= 5
       points.to_f / games_played
     else
       nil
