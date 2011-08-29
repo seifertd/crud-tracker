@@ -21,6 +21,7 @@ class PlayersController < ApplicationController
             :points => player.points,
             :games_played => player.games_played,
             :ppg => player.ppg,
+            :ppg_with_bonus => player.ppg_with_bonus,
             :win_percentage => player.win_percentage,
             :place_percentage => player.place_percentage,
             :show_percentage => player.show_percentage,
