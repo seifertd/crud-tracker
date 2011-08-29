@@ -45,15 +45,20 @@ class Game < ActiveRecord::Base
 
   def self.reset_scores
     points = Hash.new {|h,k| h[k] = 0 }
+    bonus_points = Hash.new{|h,k| h[k] = 0}
     self.all.each do |game|
        entrants = game.entrants.sort_by {|e| e.final_position }
-       points[entrants.first.player.id] += 3
-       points[entrants[1].player.id] += 2
-       points[entrants[2].player.id] += 1
-       points[entrants.last.player.id] -= 1
+       entrants.each_with_index do |entrant, idx|
+         points[entrant.player.id] += 3 if idx == 0
+         points[entrant.player.id] += 2 if idx == 1
+         points[entrant.player.id] += 1 if idx == 2
+         points[entrant.player.id] -= 1 if idx == (entrants.size - 1)
+         bonus_points[entrant.player.id] = entrants.size - idx
+       end
     end
     Player.all.each do |player|
-      player.points = points[player.id]
+      player.points = points[player.id] || 0
+      player.bonus_points = bonus_points[player.id] || 0
       player.save!
     end
   end
