@@ -3,6 +3,10 @@ class Entrant < ActiveRecord::Base
   belongs_to :player
   acts_as_list :scope => :game
 
+  def bonus_score
+    game.entrants.size - final_position + 1
+  end
+
   def score
     case final_position
     when 1

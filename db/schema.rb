@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110804174109) do
+ActiveRecord::Schema.define(:version => 20110829185614) do
 
   create_table "entrants", :force => true do |t|
     t.integer  "game_id",                          :null => false
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20110804174109) do
     t.integer  "points"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "bonus_points", :default => 0, :null => false
   end
 
 end

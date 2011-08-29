@@ -32,6 +32,13 @@ class Game < ActiveRecord::Base
         entrant.player.save!
         logger.debug("  -> #{(index+1).ordinal} place: #{entrant.id}, player: #{entrant.player.name}, points after: #{entrant.player.points}")
       end
+      # Distribute bonus points
+      standings.each_with_index do |entrant, index|
+        bonus = standings.size - index
+        logger.debug("  -> #{(index+1).ordinal} place: #{entrant.id}, player: #{entrant.player.name}, got #{bonus} bonus points.")
+        entrant.player.bonus_points += bonus
+        entrant.player.save!
+      end
       self.save!
     end
   end

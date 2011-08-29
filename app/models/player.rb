@@ -24,6 +24,14 @@ class Player < ActiveRecord::Base
     end
   end
 
+  def ppg_with_bonus
+    @ppg_with_bonus ||= if games_played >= 5
+      (points + bonus_points).to_f / games_played
+    else
+      nil
+    end
+  end
+
   def win_percentage
     if games_played > 0
       wins = entrants.inject(0) {|sum, entrant| sum += (entrant.final_position == 1 ? 1 : 0) }
