@@ -4,7 +4,7 @@ class AddBonusPointsToPlayer < ActiveRecord::Migration
     Player.reset_column_information
     transaction do
       Game.all.each do |game|
-        entries = game.entrants.sort_by{|e| e.final_position}
+        entries = game.entrants.sort_by(&:final_position)
         entries.each_with_index do |entrant, idx|
           entrant.player.bonus_points += entries.size - idx
           entrant.player.save!
