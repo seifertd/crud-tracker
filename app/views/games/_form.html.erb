@@ -27,7 +27,7 @@
       <li class="empty">Select some players to the left...</li>
     <% else -%>
       <% @game.players.each do |player| -%>
-        <li data-id="<%=player.id%>"><%=player.display_name%></li>
+        <li data-id="<%=player.id%>"><%=check_box_tag 'player_ids[]', player.id, :checked => true %> <%=player.display_name%></li>
       <% end -%>
     <% end -%>
   </ul>
@@ -43,7 +43,7 @@
   </p>
 
   <div class="actions">
-    <%= f.submit 'Start Game' %>
+    <%= f.submit 'Play!' %>
   </div>
 </div>
 <% end %>
