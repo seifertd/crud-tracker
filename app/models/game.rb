@@ -53,7 +53,7 @@ class Game < ActiveRecord::Base
          points[entrant.player.id] += 2 if idx == 1
          points[entrant.player.id] += 1 if idx == 2
          points[entrant.player.id] -= 1 if idx == (entrants.size - 1)
-         bonus_points[entrant.player.id] = entrants.size - idx
+         bonus_points[entrant.player.id] += entrants.size - idx
        end
     end
     Player.all.each do |player|
