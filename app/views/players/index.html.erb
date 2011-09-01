@@ -21,8 +21,8 @@
     <td class="numeric"><%= player.games_played %></td>
     <td class="numeric"><%= player.points || 0 %></td>
     <td class="numeric"><%= player.bonus_points || 0 %></td>
-    <td class="numeric"><%= "%5.3f" % player.ppg if player.games_played >= 5%></td>
-    <td class="numeric"><%= "%6.3f" % player.ppg_with_bonus if player.games_played >= 5%></td>
+    <td class="numeric"><%= "%5.3f" % player.ppg if player.games_played >= Player::MIN_GAMES_TO_SCORE%></td>
+    <td class="numeric"><%= "%6.3f" % player.ppg_with_bonus if player.games_played >= Player::MIN_GAMES_TO_SCORE%></td>
     <td class="numeric"><%= "%4.1f%" % player.win_percentage if player.games_played > 0%></td>
     <td class="numeric"><%= "%4.1f%" % player.place_percentage if player.games_played > 0%></td>
     <td class="numeric"><%= "%4.1f%" % player.show_percentage if player.games_played > 0%></td>

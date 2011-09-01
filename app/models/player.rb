@@ -3,6 +3,7 @@ class Player < ActiveRecord::Base
   has_many :games, :through => :entrants
   validates_uniqueness_of :name
   validates_uniqueness_of :nickname, :allow_blank => true
+  MIN_GAMES_TO_SCORE = 5
 
   def display_name
     @display_name ||= begin
@@ -17,7 +18,7 @@ class Player < ActiveRecord::Base
   end
 
   def ppg
-    @ppg ||= if games_played >= 5
+    @ppg ||= if games_played >= MIN_GAMES_TO_SCORE
       points.to_f / games_played
     else
       nil
@@ -25,8 +26,8 @@ class Player < ActiveRecord::Base
   end
 
   def ppg_with_bonus
-    @ppg_with_bonus ||= if games_played >= 5
-      (points + bonus_points).to_f / games_played
+    @ppg_with_bonus ||= if games_played >= MIN_GAMES_TO_SCORE
+      ((points || 0) + (bonus_points || 0)).to_f / games_played
     else
       nil
     end
