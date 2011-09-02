@@ -39,6 +39,8 @@ class PlayersController < ApplicationController
   def show
     @player = Player.find(params[:id])
 
+    @entries = @player.entrants.order('created_at desc').paginate(:page => params[:page], :per_page => 10)
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @player }

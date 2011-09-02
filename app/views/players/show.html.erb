@@ -13,14 +13,15 @@
   <b>Bonus Points:</b>
   <%= @player.bonus_points %>
 </p>
-<h3>Game History (Last 20 Only)</h3>
+<h3>Game History</h3>
 <table id="leader_board" border="1">
   <tr class="header"><th>Date</th><th>Place</th><th>Points</th><th>Bonus</th></tr>
-<%# @player.entrants.order('created_at desc').limit(20).each do |entry| -%>
-<% @player.entrants.order('created_at desc').each do |entry| -%>
+<% @entries.each do |entry| -%>
   <tr><td><%=entry.game.created_at.to_date.to_formatted_s(:short)%></td><td><%=entry.final_position.ordinal%> of <%=entry.game.entrants.size%></td><td><%=entry.score%></td><td><%=entry.bonus_score%></tr>
 <% end %>
 </table>
+<p><%=will_paginate @entries %></p>
+<p><%=page_entries_info(@entries).html_safe%></p>
 
 <%= link_to 'Edit', edit_player_path(@player) %> |
 <%= link_to 'Back', players_path %>
