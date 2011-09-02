@@ -79,7 +79,7 @@ class GamesController < ApplicationController
       end
 
       # Reset players
-      entrant_ids = (params[:player_ids] || [])).uniq
+      entrant_ids = (params[:player_ids] || []).uniq
       position = 1
       new_entrants = entrant_ids.map do |player_id|
         entrant = @game.entrants.find_by_player_id(player_id) || Entrant.new(:player_id => player_id, :position => position)
