@@ -76,20 +76,20 @@ class GamesController < ApplicationController
         @game.finish
         notice_text = 'Game was ended'
         redirect_to_obj = games_url
-      end
-
-      # Reset players
-      entrant_ids = (params[:player_ids] || []).uniq
-      position = 1
-      new_entrants = entrant_ids.map do |player_id|
-        entrant = @game.entrants.find_by_player_id(player_id) || Entrant.new(:player_id => player_id, :position => position)
-        unless entrant.new_record?
-          entrant.update_attribute(:position, position)
+      else
+        # Reset players
+        entrant_ids = (params[:player_ids] || []).uniq
+        position = 1
+        new_entrants = entrant_ids.map do |player_id|
+          entrant = @game.entrants.find_by_player_id(player_id) || Entrant.new(:player_id => player_id, :position => position)
+          unless entrant.new_record?
+            entrant.update_attribute(:position, position)
+          end
+          position += 1
+          entrant
         end
-        position += 1
-        entrant
+        @game.entrants = new_entrants
       end
-      @game.entrants = new_entrants
 
       if @game.save
         format.html { redirect_to(redirect_to_obj, :notice => notice_text) }
