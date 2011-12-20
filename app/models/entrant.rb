@@ -4,7 +4,7 @@ class Entrant < ActiveRecord::Base
   acts_as_list :scope => :game
 
   def bonus_score
-    game.entrants.size - final_position + 1
+    game.entrants.size - (final_position || -1) + 1
   end
 
   def score
@@ -16,6 +16,8 @@ class Entrant < ActiveRecord::Base
     when 3
       1
     when game.entrants.size
+      -1
+    else
       -1
     end
   end

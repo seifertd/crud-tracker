@@ -19,7 +19,7 @@ class GamesControllerTest < ActionController::TestCase
 
   test "should create game" do
     assert_difference('Game.count') do
-      post :create, :game => nil, :entrant_ids => @players.map(&:id), :shuffle => false
+      post :create, :game => nil, :player_ids => @players.map(&:id), :shuffle => false
     end
 
     assert_redirected_to game_path(assigns(:game))

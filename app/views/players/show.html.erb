@@ -17,7 +17,7 @@
 <table id="leader_board" border="1">
   <tr class="header"><th>Date</th><th>Place</th><th>Points</th><th>Bonus</th></tr>
 <% @entries.each do |entry| -%>
-  <tr><td><%=entry.game.created_at.to_date.to_formatted_s(:short)%></td><td><%=entry.final_position.ordinal%> of <%=entry.game.entrants.size%></td><td><%=entry.score%></td><td><%=entry.bonus_score%></tr>
+  <tr><td><%=entry.game.created_at.to_date.to_formatted_s(:short)%></td><td><%=entry.final_position ? entry.final_position.ordinal : -1%> of <%=entry.game.entrants.size%></td><td><%=entry.score%></td><td><%=entry.bonus_score%></tr>
 <% end %>
 </table>
 <p><%=will_paginate @entries %></p>
