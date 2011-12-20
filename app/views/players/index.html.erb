@@ -15,7 +15,7 @@
   </tr>
 
 <% @players.each do |player| %>
-  <tr>
+  <tr data-player-id="<%=player.id%>" class="<%= player.active ? '' : 'disabled'%>">
     <td><%= player.name %></td>
     <td><%= player.nickname %></td>
     <td class="numeric"><%= player.games_played %></td>
@@ -29,6 +29,13 @@
     <td class="numeric"><%= "%4.1f%" % player.last_percentage if player.games_played > 0%></td>
     <td><%= link_to 'Show', player %></td>
     <td><%= link_to 'Edit', edit_player_path(player) %></td>
+    <td>
+      <% if player.active -%>
+        <%= link_to 'Deactivate', player_path(player, :"player[active]" => false), {:remote => true, :method => :put, :confirm => 'Are you sure?', :id => "activate_#{player.id}"} %>
+      <% else -%>
+        <%= link_to 'Activate', player_path(player, :"player[active]" => true), {:remote => true, :method => :put, :id => "activate_#{player.id}"} %>
+      <% end -%>
+    </td>
 <% end %>
 </table>
 

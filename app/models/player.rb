@@ -5,6 +5,10 @@ class Player < ActiveRecord::Base
   validates_uniqueness_of :nickname, :allow_blank => true
   MIN_GAMES_TO_SCORE = 5
 
+  def self.active
+    where(:active => true)
+  end
+
   def display_name
     @display_name ||= begin
       display_name = "#{name}"

@@ -66,6 +66,12 @@
 #leader_board tr:nth-child(even) {
   background-color: #ddd;
 }
+#leader_board tr.disabled {
+  background-color: red !important;
+}
+#leader_board tr.disabled td {
+  text-decoration: line-through;
+}
 #leader_board td.numeric {
   text-align: center;
 }

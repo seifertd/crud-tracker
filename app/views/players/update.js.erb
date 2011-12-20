@@ -1,0 +1,11 @@
+<% if @player.active -%>
+  $("tr[data-player-id=<%=@player.id%>]").removeClass("disabled");
+  $("#activate_<%=@player.id%>").html("Deactivate");
+  $("#activate_<%=@player.id%>").attr("href", '<%=player_path(@player, :"player[active]" => false)%>');
+  $("#activate_<%=@player.id%>").attr("data-confirm", "Are you sure?");
+<% else -%>
+  $("tr[data-player-id=<%=@player.id%>]").addClass("disabled");
+  $("#activate_<%=@player.id%>").html("Activate");
+  $("#activate_<%=@player.id%>").attr("href", '<%=player_path(@player, :"player[active]" => true)%>');
+  $("#activate_<%=@player.id%>").removeAttr("data-confirm");
+<% end -%>
