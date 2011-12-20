@@ -52,9 +52,16 @@ class GamesController < ApplicationController
       entrant
     end
 
+    redirect_to_obj = @game
+
     respond_to do |format|
       if @game.save
-        format.html { redirect_to(@game, :notice => 'Game was successfully created.') }
+        if params[:commit] == 'Record Final Result'
+          @game.finish
+          @game.save
+          redirect_to_obj = games_url
+        end
+        format.html { redirect_to(redirect_to_obj, :notice => 'Game was successfully created.') }
         format.xml  { render :xml => @game, :status => :created, :location => @game }
       else
         format.html { render :action => "new" }

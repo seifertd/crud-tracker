@@ -6,6 +6,10 @@ class Game < ActiveRecord::Base
     (Player.all - players).sort_by(&:display_name)
   end
 
+  def finish
+    self.game_over(self.entrants.map(&:id))
+  end
+
   def game_over(standings)
     return unless self.started
     logger.debug("Game #{self.id}: end of game")
