@@ -1,5 +1,5 @@
 class Player < ActiveRecord::Base
-  has_many :entrants, :dependant => :destroy
+  has_many :entrants, :dependent => :destroy
   has_many :completed_entrants, :class_name => 'Entrant', :include => 'game', :conditions => "games.started = 'f'"
   has_many :games, :through => :entrants
   validates_uniqueness_of :name
