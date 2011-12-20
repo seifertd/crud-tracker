@@ -39,7 +39,8 @@ class PlayersController < ApplicationController
   def show
     @player = Player.find(params[:id])
 
-    @entries = @player.entrants.order('created_at desc').paginate(:page => params[:page], :per_page => 10)
+    @entries = @player.completed_entrants.order('entrants.created_at desc').paginate(:page => params[:page], :per_page => 10)
+     
 
     respond_to do |format|
       format.html # show.html.erb
