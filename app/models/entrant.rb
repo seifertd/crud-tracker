@@ -18,7 +18,7 @@ class Entrant < ActiveRecord::Base
     when game.entrants.size
       -1
     else
-      -1
+      0
     end
   end
 end
