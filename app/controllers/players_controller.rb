@@ -7,7 +7,7 @@ class PlayersController < ApplicationController
     @sort_criteria = (params[:sort] || 'ppg').to_sym
 
     @players = @players.sort_by do |player|
-      [0.0 - (player.send(@sort_criteria) || -1000), 0.0 - (player.win_percentage || -1000), 0.0 - (player.place_percentage || -1000), 0.0 - (player.show_percentage || -1000), player.last_percentage || -1000, player.name ]
+      [player.active ? -1 : 1, 0.0 - (player.send(@sort_criteria) || -1000), 0.0 - (player.win_percentage || -1000), 0.0 - (player.place_percentage || -1000), 0.0 - (player.show_percentage || -1000), player.last_percentage || -1000, player.name ]
     end
 
     respond_to do |format|
