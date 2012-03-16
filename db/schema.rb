@@ -19,23 +19,23 @@ ActiveRecord::Schema.define(:version => 20111220174607) do
     t.integer  "strikes",        :default => 0,    :null => false
     t.integer  "position",       :default => 1,    :null => false
     t.boolean  "alive",          :default => true, :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.integer  "final_position"
   end
 
   create_table "games", :force => true do |t|
     t.boolean  "started",    :default => false, :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   create_table "players", :force => true do |t|
     t.string   "name"
     t.string   "nickname"
     t.integer  "points"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.integer  "bonus_points", :default => 0,    :null => false
     t.boolean  "active",       :default => true, :null => false
   end
