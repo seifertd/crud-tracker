@@ -2,6 +2,8 @@ class Game < ActiveRecord::Base
   has_many :entrants, :order => 'position asc', :dependent => :delete_all
   has_many :players, :through => :entrants
 
+  after_destroy { |record| Game.reset_scores }
+
   def available_players
     (Player.active - players).sort_by(&:display_name)
   end
