@@ -1,6 +1,5 @@
 class Player < ActiveRecord::Base
   has_many :entrants, :dependent => :destroy
-  has_many :completed_entrants, :class_name => 'Entrant', :include => 'game', :conditions => "games.started = 'f'"
   has_many :games, :through => :entrants
   validates_uniqueness_of :name
   validates_uniqueness_of :nickname, :allow_blank => true
@@ -8,6 +7,10 @@ class Player < ActiveRecord::Base
 
   def self.active
     where(:active => true)
+  end
+
+  def completed_entrants
+    entrants.joins("join games on games.id = entrants.game_id").where("games.started = 'f'")
   end
 
   def display_name
