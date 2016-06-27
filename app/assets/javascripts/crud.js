@@ -119,6 +119,7 @@ var crudGame = function () {
   }
 }();
 
-$(document).ready(function() {
+var ready = function() {
   crudGame.start($(".crud_game"));
-});
+};
+$(document).on('page:change', ready);

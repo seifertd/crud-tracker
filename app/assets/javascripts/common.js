@@ -1,5 +1,5 @@
 // game selection
-$(document).ready(function() {
+$(document).on('page:change', function() {
   var playing_list = $('#playing_players');
   var available_list = $('#available_players');
   function handle_click(original_li) {
