@@ -41,7 +41,7 @@ class GamesController < ApplicationController
   # POST /games
   # POST /games.xml
   def create
-    @game = Game.new((params[:game] || {}).merge({:started => true}))
+    @game = Game.new((params[:game] || {}).merge({:started => true}).permit!)
 
     entrant_ids = (params[:player_ids] || []).uniq
     entrant_ids.shuffle! if params[:shuffle]

@@ -15,7 +15,7 @@ class Game < ActiveRecord::Base
 
   def game_over(standings)
     return unless self.started
-    logger.debug("Game #{self.id}: end of game")
+    logger.debug("Game #{self.id}: end of game: standings: #{standings.inspect}")
     self.transaction do
       position = entrants.size
       standings.each_with_index do |entrant_id, idx|
@@ -26,7 +26,7 @@ class Game < ActiveRecord::Base
         entrant.save!
       end
       self.started = false
-      standings = entrants.sort_by(&:final_position)
+      standings = self.entrants.reload.sort_by(&:final_position)
       logger.debug("  -> Last place: #{standings.last.id}, player: #{standings.last.player.name}, points before: #{standings.last.player.points}")
       standings.last.player.points ||= 0
       standings.last.player.points -= 1
