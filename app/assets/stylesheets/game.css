@@ -53,41 +53,6 @@
 .crud_game table tr[data-alive="false"] td.strikes:hover {
 }
 
-/* Leader Board */
-#leader_board {
-  border-collapse: collapse;
-}
-#leader_board .header {
-  background-color: lightgreen !important;
-}
-#leader_board tr:nth-child(odd) {
-  background-color: #eee;
-}
-#leader_board tr:nth-child(even) {
-  background-color: #ddd;
-}
-#leader_board tr.disabled {
-  background-color: red !important;
-}
-#leader_board tr.disabled td {
-  text-decoration: line-through;
-}
-#leader_board td.numeric {
-  text-align: center;
-}
-#leader_board {
-  border-collapse: collapse;
-}
-#leader_board .header th {
-  background-color: lightgreen !important;
-}
-#leader_board tr:nth-child(odd) {
-  background-color: #eee;
-}
-#leader_board tr:nth-child(even) {
-  background-color: #ddd;
-}
-
 /* Game List */
 ol.last {
   display: block;
