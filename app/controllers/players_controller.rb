@@ -67,7 +67,7 @@ class PlayersController < ApplicationController
   # POST /players
   # POST /players.xml
   def create
-    @player = Player.new(params[:player])
+    @player = Player.new(params[:player].permit(:name, :nickname))
 
     respond_to do |format|
       if @player.save
@@ -86,7 +86,7 @@ class PlayersController < ApplicationController
     @player = Player.find(params[:id])
 
     respond_to do |format|
-      if @player.update_attributes(params[:player])
+      if @player.update_attributes(params[:player].permit(:name, :nickname))
         format.html { redirect_to(@player, :notice => 'Player was successfully updated.') }
         format.js
         format.xml  { head :ok }
