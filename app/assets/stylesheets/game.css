@@ -65,3 +65,32 @@ li.last:before {
   content: "L. ";
 }
 
+/* Leader board */
+@media screen only and (max-device-width: 700px) {
+  .leader-board table, thead, tbody, th, td, tr {
+      display: block;
+    }
+  .leader-board thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  .leader-board tr {
+    border: 1px solid #ccc;
+  }
+  .leader-board td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+  .leader-board td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+  .leader-board td:nth-of-type(1):before { content: "FOO"; }
+}
