@@ -80,17 +80,17 @@ var crudGame = function () {
   }
 
   function add_click_handlers() {
-    $(table).find("td.strikes").click(function() {
+    $(table).find("td.strikes").off('click').click(function() {
       var row = $(this).parent();
       var entrant_id = parseInt(row.attr("data-player"));
       var entrant = player(entrant_id);
       if (entrant) {
-        $(this).append("<img src='/images/strike.gif'>");
+        $(this).append("<button class='strike'></button>");
         entrant.strikes++;
         if (entrant.strikes >= 3) {
           entrant.alive = false;
           row.attr("data-alive", "false"); 
-          $(this).unbind('click');
+          $(this).off('click');
           move_row_to_bottom(row);
         }
         // Check if there is only one alive entry and end the game
@@ -122,4 +122,4 @@ var crudGame = function () {
 var ready = function() {
   crudGame.start($(".crud_game"));
 };
-$(document).on('page:change', ready);
+$(document).on('turbolinks:load', ready);

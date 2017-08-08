@@ -1,5 +1,5 @@
 // game selection
-$(document).on('page:change', function() {
+$(document).on('turbolinks:load', function() {
   var playing_list = $('#playing_players');
   var available_list = $('#available_players');
   function handle_click(original_li) {

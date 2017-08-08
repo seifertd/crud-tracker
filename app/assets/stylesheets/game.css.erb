@@ -27,7 +27,7 @@
 
 /* Crud Game */
 .crud_game {
-  width: 300px;
+  width: 330px;
 }
 .crud_game table tr {
   height: 45px;
@@ -36,6 +36,13 @@
 .crud_game table tr td.strikes {
   padding-left: 10px;
 }
+.crud_game table tr td.strikes button.strike {
+  background-image: url("<%= asset_url "strike.gif" %>");
+  width: 30px;
+  height: 30px;
+  margin-right: 3px;
+}
+
 .crud_game table tr:nth-child(odd) td {
   background-color: #eee; 
 }
