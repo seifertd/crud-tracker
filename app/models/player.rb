@@ -22,7 +22,7 @@ class Player < ActiveRecord::Base
   end
 
   def games_played
-    @games_played ||= entrants.count
+    @games_played ||= entrants.size
   end
 
   def ppg
@@ -70,7 +70,7 @@ class Player < ActiveRecord::Base
 
   def last_percentage
     if games_played > 0
-      wins = entrants.inject(0) {|sum, entrant| num_entrants = entrant.game.entrants.count; sum += (entrant.final_position == num_entrants ? 1 : 0) }
+      wins = entrants.inject(0) {|sum, entrant| num_entrants = entrant.game.entrants_count; sum += (entrant.final_position == num_entrants ? 1 : 0) }
       wins.to_f / games_played * 100.0
     else
       nil

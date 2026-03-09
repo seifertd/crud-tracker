@@ -7,6 +7,7 @@ gem 'jbuilder'
 gem 'acts_as_list'
 gem 'will_paginate'
 gem 'jquery-rails'
+gem 'puma'
 
 group :development, :test do
   gem 'debug'

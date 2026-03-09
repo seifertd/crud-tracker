@@ -1,6 +1,6 @@
 class Game < ActiveRecord::Base
   scope :completed, -> { where(started: false) }
-  has_many :entrants, -> { order('position asc') }, :dependent => :delete_all
+  has_many :entrants, -> { order('position asc') }, :dependent => :destroy
   has_many :players, :through => :entrants
 
   after_destroy { |record| Game.reset_scores }

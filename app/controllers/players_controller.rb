@@ -1,7 +1,7 @@
 class PlayersController < ApplicationController
   # GET /players
   def index
-    @players = Player.all
+    @players = Player.includes(entrants: :game).all
 
     @sort_criteria = (params[:sort] || 'ppg').to_sym
 
@@ -36,7 +36,7 @@ class PlayersController < ApplicationController
   # GET /players/1
   def show
     @player = Player.find(params[:id])
-    @entries = @player.completed_entrants.order('entrants.created_at desc').paginate(page: params[:page], per_page: 10)
+    @entries = @player.completed_entrants.order('entrants.created_at desc').preload(game: :entrants).paginate(page: params[:page], per_page: 10)
 
     respond_to do |format|
       format.html

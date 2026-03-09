@@ -1,5 +1,5 @@
 class Entrant < ActiveRecord::Base
-  belongs_to :game
+  belongs_to :game, counter_cache: true
   belongs_to :player
   acts_as_list :scope => :game
 
