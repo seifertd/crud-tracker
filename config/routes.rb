@@ -1,6 +1,8 @@
-Crud::Application.routes.draw do
-  resources :games
+Rails.application.routes.draw do
+  # The priority is based upon order of creation: first created -> highest priority.
+  # See how all your routes lay out with "rake routes".
 
+  resources :games
   get "home/index"
   resources :players
   root :to => 'home#index'

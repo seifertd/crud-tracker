@@ -1,6 +1,5 @@
 class PlayersController < ApplicationController
   # GET /players
-  # GET /players.xml
   def index
     @players = Player.all
 
@@ -11,51 +10,47 @@ class PlayersController < ApplicationController
     end
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json do
         json = @players.map do |player|
           {
-            :player_id => player.id,
-            :name => player.name,
-            :nickname => player.nickname,
-            :points => player.points,
-            :games_played => player.games_played,
-            :ppg => player.ppg,
-            :ppg_with_bonus => player.ppg_with_bonus,
-            :win_percentage => player.win_percentage,
-            :place_percentage => player.place_percentage,
-            :show_percentage => player.show_percentage,
-            :last_percentage => player.last_percentage
+            player_id: player.id,
+            name: player.name,
+            nickname: player.nickname,
+            points: player.points,
+            games_played: player.games_played,
+            ppg: player.ppg,
+            ppg_with_bonus: player.ppg_with_bonus,
+            win_percentage: player.win_percentage,
+            place_percentage: player.place_percentage,
+            show_percentage: player.show_percentage,
+            last_percentage: player.last_percentage
           }
         end
-        render :json => json
+        render json: json
       end
-      format.xml  { render :xml => @players }
+      format.xml { render xml: @players }
     end
   end
 
   # GET /players/1
-  # GET /players/1.xml
   def show
     @player = Player.find(params[:id])
-
-    @entries = @player.completed_entrants.order('entrants.created_at desc').paginate(:page => params[:page], :per_page => 10)
-     
+    @entries = @player.completed_entrants.order('entrants.created_at desc').paginate(page: params[:page], per_page: 10)
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @player }
+      format.html
+      format.xml { render xml: @player }
     end
   end
 
   # GET /players/new
-  # GET /players/new.xml
   def new
     @player = Player.new
 
     respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @player }
+      format.html
+      format.xml { render xml: @player }
     end
   end
 
@@ -65,40 +60,37 @@ class PlayersController < ApplicationController
   end
 
   # POST /players
-  # POST /players.xml
   def create
-    @player = Player.new(params[:player])
+    @player = Player.new(params[:player].permit(:name, :nickname))
 
     respond_to do |format|
       if @player.save
-        format.html { redirect_to(@player, :notice => 'Player was successfully created.') }
-        format.xml  { render :xml => @player, :status => :created, :location => @player }
+        format.html { redirect_to(@player, notice: 'Player was successfully created.') }
+        format.xml  { render xml: @player, status: :created, location: @player }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @player.errors, :status => :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_entity }
+        format.xml  { render xml: @player.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # PUT /players/1
-  # PUT /players/1.xml
   def update
     @player = Player.find(params[:id])
 
     respond_to do |format|
-      if @player.update_attributes(params[:player])
-        format.html { redirect_to(@player, :notice => 'Player was successfully updated.') }
+      if @player.update(params[:player].permit(:name, :nickname, :active))
+        format.html { redirect_to(@player, notice: 'Player was successfully updated.') }
         format.js
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @player.errors, :status => :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_entity }
+        format.xml  { render xml: @player.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # DELETE /players/1
-  # DELETE /players/1.xml
   def destroy
     @player = Player.find(params[:id])
     @player.destroy

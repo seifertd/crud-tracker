@@ -1,6 +1,6 @@
 <h1>Crud Leader Board</h1>
 
-<table id="leader_board">
+<table class="table table-responsive table-striped table-sm leader-board">
   <tr class="header">
     <th rowspan=2>Name</th>
     <th rowspan=2>Nickname</th>
@@ -8,10 +8,10 @@
     <th rowspan=2>Points</th>
     <th rowspan=2>Bonus</th>
     <th colspan=6>Stats</th>
-    <th colspan=3 rowspan=2>Action</th>
+    <th rowspan=2>Action</th>
   </tr>
   <tr class="header">
-    <th><%= link_to 'PPG', :sort => 'ppg'%></th><th><%= link_to 'Bonus PPG', :sort => 'ppg_with_bonus'%></th><th>Win</th><th>Place</th><th>Show</th><th>Last</th>
+    <th><%= link_to 'PPG', sort: 'ppg'%></th><th><%= link_to 'Bonus PPG', sort: 'ppg_with_bonus'%></th><th>Win</th><th>Place</th><th>Show</th><th>Last</th>
   </tr>
 
 <% @players.each do |player| %>
@@ -27,15 +27,25 @@
     <td class="numeric"><%= "%4.1f%" % player.place_percentage if player.games_played > 0%></td>
     <td class="numeric"><%= "%4.1f%" % player.show_percentage if player.games_played > 0%></td>
     <td class="numeric"><%= "%4.1f%" % player.last_percentage if player.games_played > 0%></td>
-    <td><%= link_to 'Show', player %></td>
-    <td><%= link_to 'Edit', edit_player_path(player) %></td>
     <td>
-      <% if player.active -%>
-        <%= link_to 'Deactivate', player_path(player, :"player[active]" => false), {:remote => true, :method => :put, :confirm => 'Are you sure?', :id => "activate_#{player.id}"} %>
-      <% else -%>
-        <%= link_to 'Activate', player_path(player, :"player[active]" => true), {:remote => true, :method => :put, :id => "activate_#{player.id}"} %>
-      <% end -%>
+      <div class="btn-group">
+        <button class="btn btn-sm dropdown-toggle" data-bs-toggle="dropdown" type="button">
+          Action
+        </button>
+        <ul class="dropdown-menu">
+          <li><%= link_to 'Show', player, class: 'dropdown-item' %></li>
+          <li><%= link_to 'Edit', edit_player_path(player), class: 'dropdown-item' %></li>
+          <li>
+          <% if player.active -%>
+            <%= link_to 'Deactivate', player_path(player, :"player[active]" => false), class: 'dropdown-item', remote: true, method: :put, data: { confirm: 'Are you sure?' }, id: "activate_#{player.id}" %>
+          <% else -%>
+            <%= link_to 'Activate', player_path(player, :"player[active]" => true), class: 'dropdown-item', remote: true, method: :put, id: "activate_#{player.id}" %>
+          <% end -%>
+          </li>
+        </ul>
+      </div>
     </td>
+  </tr>
 <% end %>
 </table>
 

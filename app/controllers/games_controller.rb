@@ -41,7 +41,7 @@ class GamesController < ApplicationController
   # POST /games
   # POST /games.xml
   def create
-    @game = Game.new((params[:game] || {}).merge({:started => true}))
+    @game = Game.new((params[:game] || {}).merge({:started => true}).permit!)
 
     entrant_ids = (params[:player_ids] || []).uniq
     entrant_ids.shuffle! if params[:shuffle]
@@ -88,7 +88,7 @@ class GamesController < ApplicationController
         entrant_ids = (params[:player_ids] || []).uniq
         position = 1
         new_entrants = entrant_ids.map do |player_id|
-          entrant = @game.entrants.find_by_player_id(player_id) || Entrant.new(:player_id => player_id, :position => position)
+          entrant = @game.entrants.find_by(player_id: player_id) || Entrant.new(:player_id => player_id, :position => position)
           unless entrant.new_record?
             entrant.update_attribute(:position, position)
           end

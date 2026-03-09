@@ -29,7 +29,7 @@
         <%= link_to 'Players', edit_game_path(game) %>
         <br/>
       <% end -%>
-      <%= link_to 'Delete', game, :confirm => 'Are you sure?', :method => :delete %>
+      <%= link_to 'Delete', game, data: { confirm: 'Are you sure?' }, method: :delete %>
     </td>
   </tr>
 <% end %>
