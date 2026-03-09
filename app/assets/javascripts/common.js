@@ -13,7 +13,7 @@ $(document).ready(function() {
     if (parent_ul.attr('id') == 'playing_players') {
       // Make sure the check box is unchecked
       li_clicked.find("input").prop('checked', false);
-      if ( $("#playing_players li").size() == 1 ) {
+      if ( $("#playing_players li").length == 1 ) {
         $("li.empty").show();
       }
       add_to = available_list;

@@ -6,7 +6,7 @@ class Game < ActiveRecord::Base
   after_destroy { |record| Game.reset_scores }
 
   def available_players
-    (Player.active - players).sort_by(&:display_name)
+    (Player.active.to_a - players.to_a).sort_by(&:display_name)
   end
 
   def finish
