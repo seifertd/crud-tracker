@@ -11,7 +11,7 @@
     <th rowspan=2>Action</th>
   </tr>
   <tr class="header">
-    <th><%= link_to 'PPG', sort: 'ppg'%></th><th><%= link_to 'Bonus PPG', sort: 'ppg_with_bonus'%></th><th>Win</th><th>Place</th><th>Show</th><th>Last</th>
+    <th><%= link_to 'PPG', sort: 'ppg'%></th><th><%= link_to 'Bonus PPG', sort: 'ppg_with_bonus'%></th><th><%= link_to 'Win', sort: 'win_percentage' %></th><th><%= link_to 'Place', sort: 'place_percentage' %></th><th><%= link_to 'Show', sort: 'show_percentage' %></th><th><%= link_to 'Last', sort: 'last_percentage' %></th>
   </tr>
 
 <% @players.each do |player| %>

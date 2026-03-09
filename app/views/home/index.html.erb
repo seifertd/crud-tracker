@@ -1,10 +1,73 @@
-<h2>Players</h2>
-<ul>
-  <li><%= link_to 'Register Player', new_player_url %></li>
-  <li><%= link_to 'Leader Board', players_url %></li>
-</ul>
-<h2>Games</h2>
-<ul>
-  <li><%= link_to 'New Game', new_game_url %></li>
-  <li><%= link_to 'Game History', games_url %></li>
-</ul>
+<div class="row g-4 mt-2">
+
+  <% if @active_games.any? %>
+  <div class="col-12">
+    <div class="card border-warning">
+      <div class="card-header bg-warning text-dark fw-bold">Active Games</div>
+      <ul class="list-group list-group-flush">
+        <% @active_games.each do |game| %>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>
+              Started <%= game.created_at.to_date.strftime("%b %-d, %Y") %> &mdash;
+              <%= game.entrants.map { |e| e.player.display_name }.join(", ") %>
+            </span>
+            <%= link_to "Resume", game, class: "btn btn-sm btn-warning" %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <% end %>
+
+  <div class="col-md-6">
+    <div class="card h-100">
+      <div class="card-header fw-bold">Recent Games</div>
+      <% if @recent_games.any? %>
+        <ul class="list-group list-group-flush">
+          <% @recent_games.each do |game| %>
+            <% standings = game.entrants.sort_by(&:final_position) %>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <small class="text-muted"><%= game.updated_at.to_date.strftime("%b %-d, %Y") %></small>
+                <%= link_to "Details", game, class: "btn btn-sm btn-outline-secondary" %>
+              </div>
+              <ol class="mb-0 mt-1">
+                <% standings.each do |e| %>
+                  <li><%= e.player.display_name %></li>
+                <% end %>
+              </ol>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <div class="card-body text-muted">No completed games yet.</div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card h-100">
+      <div class="card-header fw-bold">Top Players</div>
+      <% if @top_players.any? %>
+        <table class="table table-sm table-striped mb-0">
+          <thead><tr><th>Player</th><th>PPG</th><th>Games</th></tr></thead>
+          <tbody>
+            <% @top_players.each do |player| %>
+              <tr>
+                <td><%= link_to player.display_name, player %></td>
+                <td><%= "%+.2f" % player.ppg %></td>
+                <td><%= player.games_played %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <div class="card-body text-muted">Not enough data yet.</div>
+      <% end %>
+      <div class="card-footer">
+        <%= link_to "Full Leaderboard", players_path, class: "btn btn-sm btn-outline-primary" %>
+      </div>
+    </div>
+  </div>
+
+</div>

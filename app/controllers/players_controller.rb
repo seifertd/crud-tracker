@@ -3,7 +3,8 @@ class PlayersController < ApplicationController
   def index
     @players = Player.includes(entrants: :game).all
 
-    @sort_criteria = (params[:sort] || 'ppg').to_sym
+    allowed_sorts = %w[ppg ppg_with_bonus win_percentage place_percentage show_percentage last_percentage]
+    @sort_criteria = (allowed_sorts.include?(params[:sort]) ? params[:sort] : 'ppg').to_sym
 
     @players = @players.sort_by do |player|
       [player.active ? -1 : 1, 0.0 - (player.send(@sort_criteria) || -1000), 0.0 - (player.win_percentage || -1000), 0.0 - (player.place_percentage || -1000), 0.0 - (player.show_percentage || -1000), player.last_percentage || -1000, player.name ]

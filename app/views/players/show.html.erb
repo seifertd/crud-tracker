@@ -17,12 +17,12 @@
   <thead><tr><th>Date</th><th>Place</th><th>Points</th><th>Bonus</th></tr></thead>
   <tbody>
 <% @entries.each do |entry| -%>
-  <tr><td><%=entry.game.created_at.to_date.to_fs(:short)%></td><td><%=entry.final_position%><%=entry.final_position ? entry.final_position.ordinal : -1%> of <%=entry.game.entrants.size%></td><td><%=entry.score%></td><td><%=entry.bonus_score%></tr>
+  <tr><td><%=entry.game.created_at.to_date.strftime("%b %-d, %Y")%></td><td><%=entry.final_position%><%=entry.final_position ? entry.final_position.ordinal : -1%> of <%=entry.game.entrants.size%></td><td><%=entry.score%></td><td><%=entry.bonus_score%></tr>
 <% end %>
   </tbody>
 </table>
-<p><%=will_paginate @entries %></p>
-<p><%=page_entries_info(@entries).html_safe%></p>
+<div class="mt-3"><%= will_paginate @entries, renderer: Bootstrap5Renderer %></div>
+<p class="text-muted small"><%= page_entries_info(@entries).html_safe %></p>
 
 <%= link_to 'Edit', edit_player_path(@player) %> |
 <%= link_to 'Back', players_path %>

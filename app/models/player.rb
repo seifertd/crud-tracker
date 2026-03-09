@@ -10,7 +10,7 @@ class Player < ActiveRecord::Base
   end
 
   def completed_entrants
-    entrants.joins("join games on games.id = entrants.game_id").where("games.started = 'f'")
+    entrants.joins(:game).merge(Game.completed)
   end
 
   def display_name

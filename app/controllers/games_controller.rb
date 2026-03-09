@@ -2,7 +2,7 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.xml
   def index
-    @games = Game.order('created_at desc, updated_at desc').paginate(:page => params[:page])
+    @games = Game.order('created_at desc, updated_at desc').includes(entrants: :player).paginate(page: params[:page], per_page: 10)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -101,7 +101,7 @@ class GamesController < ApplicationController
       if @game.save
         format.html { redirect_to(redirect_to_obj, :notice => notice_text) }
         format.xml  { head :ok }
-        format.json { render :json => @game.to_json(:include => :entrants), :layout => false }
+        format.json { render :json => { game: @game.as_json(include: :entrants) } }
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @game.errors, :status => :unprocessable_entity }

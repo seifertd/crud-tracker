@@ -2,28 +2,45 @@
 
 <h1>Crud Game</h1>
 
-<%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
+<p>Date: <%= @game.created_at.to_date.strftime("%b %-d, %Y") %></p>
 
-<p>
-Started: <%= @game.created_at.to_fs(:long) %>
-</p>
+<% if @game.started %>
 
-<p>
-<%= button_to 'End Game Now', @game, data: { confirm: 'Are you sure?' }, method: :put, name: :submit %>
-</p>
+  <%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
 
-<div class="crud_game" data-game="<%=@game.id%>">
-  <table width="100%">
-    <tr><th>Players</th><th>Strikes</th></tr>
-    <% @game.entrants.each do |entrant| -%>
-      <tr data-player="<%=entrant.id%>" data-pid="<%=entrant.player_id%>" data-strikes="<%=entrant.strikes%>" data-alive="<%=entrant.alive%>"><td width="60%"><%=entrant.player.display_name%></td><td width="40%" class="strikes"><% entrant.strikes.times do %><button class="strike"></button><% end %></td></tr>
-    <% end -%>
+  <p>
+    <%= button_to 'End Game Now', @game, data: { confirm: 'Are you sure?' }, method: :put, name: :submit %>
+  </p>
+
+  <div class="crud_game" data-game="<%=@game.id%>">
+    <table width="100%">
+      <tr><th>Players</th><th>Strikes</th></tr>
+      <% @game.entrants.each do |entrant| -%>
+        <tr data-player="<%=entrant.id%>" data-pid="<%=entrant.player_id%>" data-strikes="<%=entrant.strikes%>" data-alive="<%=entrant.alive%>"><td width="60%"><%=entrant.player.display_name%></td><td width="40%" class="strikes"><% entrant.strikes.times do %><button class="strike"></button><% end %></td></tr>
+      <% end -%>
+    </table>
+  </div>
+
+  <%= javascript_include_tag 'crud' %>
+
+<% else %>
+
+  <table class="table table-striped table-bordered table-sm">
+    <thead><tr><th>Place</th><th>Player</th><th>Points</th><th>Bonus</th></tr></thead>
+    <tbody>
+      <% @game.entrants.sort_by(&:final_position).each do |entrant| %>
+        <tr>
+          <td><%= "#{entrant.final_position}#{entrant.final_position.ordinal}" %></td>
+          <td><%= link_to entrant.player.display_name, entrant.player %></td>
+          <td><%= entrant.score %></td>
+          <td><%= entrant.bonus_score %></td>
+        </tr>
+      <% end %>
+    </tbody>
   </table>
-</div>
+
+<% end %>
 
 <p>
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
+  <%= link_to 'Back', games_path %>
 </p>
-
-<%= javascript_include_tag 'crud' %>
