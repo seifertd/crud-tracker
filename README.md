@@ -1,6 +1,6 @@
 # CRUD Tracker
 
-A Ruby on Rails app for tracking games of [Crud](https://en.wikipedia.org/wiki/Crud_(game)), a game played on a pool table with a cue ball and one object ball. Records game results, calculates player scores, and maintains rankings and statistics.
+A Ruby on Rails app for tracking games of [Crud](https://pooltableportfolio.com/blogs/magazine/how-to-play-crud-a-step-by-step-guide-for-beginners?srsltid=AfmBOorFWmqT_CZxLewMlbuJVB4pKMugIGUeKG9DOFCVr6vbyDYANPMa), a game played on a pool table with a cue ball and one object ball. Records game results, calculates player scores, and maintains rankings and statistics.
 
 ## Features
 
