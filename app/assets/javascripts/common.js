@@ -5,7 +5,6 @@ $(document).ready(function() {
   function handle_click(original_li) {
     var li_clicked = $(original_li);
     var parent_ul = li_clicked.parent();
-    var add_to = null;
 
     // Remove from original list
     li_clicked.remove();
@@ -16,17 +15,28 @@ $(document).ready(function() {
       if ( $("#playing_players li").length == 1 ) {
         $("li.empty").show();
       }
-      add_to = available_list;
+      // Insert back into available list in alphabetical order by name
+      var name = li_clicked.text().trim();
+      var inserted = false;
+      available_list.find('li').each(function() {
+        if ($(this).text().trim() > name) {
+          li_clicked.insertBefore($(this));
+          inserted = true;
+          return false;
+        }
+      });
+      if (!inserted) { available_list.append(original_li); }
+      li_clicked.hide().slideDown(200);
     } else {
       // Make sure the check box is checked
       li_clicked.find("input").prop('checked', true);
       $("li.empty").hide();
-      add_to = playing_list;
+      li_clicked.hide();
+      playing_list.append(original_li);
+      li_clicked.slideDown(200);
     }
 
-    // Put in new list
-    add_to.append(original_li);
-    // reattache the click handler
+    // reattach the click handler
     $(original_li).click(function() {
       handle_click(this);
     })

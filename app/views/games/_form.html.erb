@@ -1,50 +1,72 @@
 <%= form_for(@game) do |f| %>
   <% if @game.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@game.errors.count, "error") %> prohibited this game from being saved:</h2>
-
-      <ul>
+    <div class="alert alert-danger" id="error_explanation">
+      <h5><%= pluralize(@game.errors.count, "error") %> prohibited this game from being saved:</h5>
+      <ul class="mb-0">
       <% @game.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
-  <div class="player_list" style="float:left;">
-  <h2>Available Players</h2>
-  <ul class="players" id="available_players">
-    <% @game.available_players.each do |player| -%>
-      <li data-id="<%=player.id%>"><%= check_box_tag 'player_ids[]', player.id %> <%=player.display_name%></li>
-    <% end -%>
-  </ul>
+
+  <div class="row g-3 mb-3 w-50">
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-header"><strong>Available Players</strong></div>
+        <ul class="players list-group list-group-flush" id="available_players">
+          <% @game.available_players.each do |player| -%>
+            <li class="list-group-item" data-id="<%=player.id%>"><%= check_box_tag 'player_ids[]', player.id %> <%=player.display_name%></li>
+          <% end -%>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-header"><strong>Players in the Game</strong></div>
+        <ul class="players list-group list-group-flush" id="playing_players">
+          <% game_players = @game.players -%>
+          <% if game_players.blank? -%>
+            <li class="list-group-item text-muted empty">Select some players to the left...</li>
+          <% else -%>
+            <% @game.players.each do |player| -%>
+              <li class="list-group-item" data-id="<%=player.id%>"><%=check_box_tag 'player_ids[]', player.id, :checked => true %> <%=player.display_name%></li>
+            <% end -%>
+          <% end -%>
+        </ul>
+      </div>
+    </div>
   </div>
 
-  <div class="player_list" style="float:left; margin-left: 30px;">
-  <h2>Players in the Game</h2>
-  <ul class="players" id="playing_players">
-    <% game_players = @game.players -%>
-    <% if game_players.blank? -%>
-      <li class="empty">Select some players to the left...</li>
-    <% else -%>
-      <% @game.players.each do |player| -%>
-        <li data-id="<%=player.id%>"><%=check_box_tag 'player_ids[]', player.id, :checked => true %> <%=player.display_name%></li>
-      <% end -%>
-    <% end -%>
-  </ul>
-</div>
-
-<div style="clear: both">
-  <p>
-  Date Played:<br/>
-  <input type="datetime-local" name="game[created_at]" size="20" value="<%= Time.now.strftime('%Y-%m-%dT%H:%M')%>" placeholder="not required"/>
-  </p>
-  <p>
-  <%= check_box_tag 'shuffle' %> Shuffle Player List?
-  </p>
-
-  <div class="actions">
-    <%= f.submit 'Play!' %>
-    <%= f.submit 'Record Final Result' %>
+  <div class="mb-3">
+    <label class="form-label">Date and Time Played</label>
+    <input type="datetime-local" name="game[created_at]" class="form-control form-control-lg" style="width:auto;" value="<%= Time.now.strftime('%Y-%m-%dT%H:%M')%>" />
   </div>
-</div>
+
+  <div class="mb-3 form-check">
+    <%= check_box_tag 'shuffle', '1', false, class: 'form-check-input' %>
+    <label class="form-check-label" for="shuffle">Shuffle Player List?</label>
+  </div>
+
+  <div class="actions d-flex align-items-center gap-2">
+    <%= f.submit 'Play!', class: 'btn btn-primary' %>
+    <%= f.submit 'Record Final Result', class: 'btn btn-secondary' %>
+    <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#recordFinalResultHelp">? Help</button>
+  </div>
+
+  <div class="modal fade" id="recordFinalResultHelp" tabindex="-1" aria-labelledby="recordFinalResultHelpLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="recordFinalResultHelpLabel">Recording a Game Result</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          If the game was already played, select players in the order of finish, then click the 'Record Final Result' button. Otherwise, use the Play! button to keep track of the game in real time.
+          Use the 'Shuffle Player List?' checkbox to set a random game order, otherwise players will go in order of selection.
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>
