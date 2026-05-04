@@ -1,4 +1,4 @@
-class AddBonusPointsToPlayer < ActiveRecord::Migration
+class AddBonusPointsToPlayer < ActiveRecord::Migration[4.2]
   def self.up
     add_column :players, :bonus_points, :integer, :null => false, :default => 0
     Player.reset_column_information

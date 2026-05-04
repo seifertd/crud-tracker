@@ -8,3 +8,4 @@ two:
 
 finished_game:
   started: true
+  entrants_count: 5

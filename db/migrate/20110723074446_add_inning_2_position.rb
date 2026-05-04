@@ -1,4 +1,4 @@
-class AddInning2Position < ActiveRecord::Migration
+class AddInning2Position < ActiveRecord::Migration[4.2]
   def self.up
     add_column :entrants, :inning_2_position, :integer, :null => true
   end

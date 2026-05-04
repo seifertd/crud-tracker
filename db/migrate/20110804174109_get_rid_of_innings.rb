@@ -1,4 +1,4 @@
-class GetRidOfInnings < ActiveRecord::Migration
+class GetRidOfInnings < ActiveRecord::Migration[4.2]
   def self.up
     transaction do
       # Make copies of games with two inning positions set

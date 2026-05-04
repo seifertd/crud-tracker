@@ -1,4 +1,4 @@
-class CreateEntrants < ActiveRecord::Migration
+class CreateEntrants < ActiveRecord::Migration[4.2]
   def self.up
     create_table :entrants do |t|
       t.integer :game_id, :null => false
